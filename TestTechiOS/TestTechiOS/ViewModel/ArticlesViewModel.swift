@@ -32,11 +32,17 @@ class ArticlesViewModel : NSObject {
         }
     }
     
-    func filterArticlesByCategory(_ categoryIdFilter: Int64) {
-        var articlesFilter: [Article] = []
+    func updateWithFilter(_ categoryIdFilter: Int64) {
         callGetArticles()
-        articlesFilter = articlesData.filter { $0.categoryId == categoryIdFilter}
-        articlesData = articlesFilter
+        self.filterByCategory(categoryIdFilter: categoryIdFilter)
+    }
+    
+    func filterByCategory(categoryIdFilter: Int64) {
+        if categoryIdFilter >= 0 {
+            var articlesFilter: [Article] = []
+            articlesFilter = self.articlesData.filter { $0.categoryId == categoryIdFilter}
+            self.articlesData = articlesFilter
+        }
     }
     
     func orderByDate(_ articlesList: [Article]) -> [Article] {

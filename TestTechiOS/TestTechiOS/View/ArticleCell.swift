@@ -17,7 +17,13 @@ class ArticleCell : UITableViewCell {
             articleImage.load(urlString:(article?.imagesUrl.thumb)!)
             articleTitleLabel.text = article?.title
             articlePrix.text = "Prix: " + (article?.price.afficherUnFloat)!
-            articleisUrgent.text = "urgent"
+            if ((article?.isUrgent) != nil) {
+                if article!.isUrgent {
+                    articleisUrgent.text = "🔥"
+                } else {
+                    articleisUrgent.text = ""
+                }
+            }
         }
     }
     

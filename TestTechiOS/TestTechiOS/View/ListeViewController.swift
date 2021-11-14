@@ -84,14 +84,14 @@ class ListeViewController: UIViewController {
     }
     
     @objc func onClickedDoneButton() {
-        articlesViewModel.filterArticlesByCategory(pickerCategoryId)
+        self.articlesViewModel.updateWithFilter(pickerCategoryId)
         self.articleTableView.reloadData()
         articleUIPicker.isHidden = true
         self.navigationController?.isToolbarHidden = true
     }
     
     @objc func onClickedResetButton() {
-        articlesViewModel.callGetArticles()
+        self.articlesViewModel.updateWithFilter(-1)
         self.articleTableView.reloadData()
         articleUIPicker.isHidden = true
         self.navigationController?.isToolbarHidden = true
@@ -119,8 +119,6 @@ class ListeViewController: UIViewController {
 
 
 extension ListeViewController: UIPickerViewDelegate, UIPickerViewDataSource {
-    
-    
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
        return 1
