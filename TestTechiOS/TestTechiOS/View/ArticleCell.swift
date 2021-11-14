@@ -16,7 +16,7 @@ class ArticleCell : UITableViewCell {
         didSet {
             articleImage.load(urlString:(article?.imagesUrl.thumb)!)
             articleTitleLabel.text = article?.title
-            articlePrix.text = "Prix: " + (article?.price.afficherUnFloat)!
+            articlePrix.text = "Prix: " + (article?.price.afficherUnFloat)! + " €"
             if ((article?.isUrgent) != nil) {
                 if article!.isUrgent {
                     articleisUrgent.text = "🔥"

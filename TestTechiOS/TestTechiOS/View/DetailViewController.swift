@@ -12,12 +12,24 @@ class DetailViewController: UIViewController {
     var article : Article? {
         
         didSet {
-            articleImage.load(urlString:(article?.imagesUrl.small)!)
-            articleTitleLabel.text = article?.title
-            articlePrix.text = "Prix: " + (article?.price.afficherUnFloat)!
+            //articleImage.load(urlString:(article?.imagesUrl.small)!)
+           // articleTitleLabel.text = article?.title
+           // articlePrix.text = "Prix: " + (article?.price.afficherUnFloat)!
            // articleDescription.text = article?.description
            // articleCreationDate.text = article?.creationDate
-            articleisUrgent.text = "urgent"
+            print("article?.creationDate")
+            print(article?.creationDate)
+            print("article?.creationDate")
+            
+            if ((article?.isUrgent) != nil) {
+                if article!.isUrgent {
+                    articleisUrgent.text = "🔥 URGENT"
+                    print( article!.isUrgent )
+                } else {
+                    articleisUrgent.text = "PAS urgent"
+                    print( article!.isUrgent )
+                }
+            }
         }
     }
     

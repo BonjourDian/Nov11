@@ -49,7 +49,7 @@ class ArticlesViewModel : NSObject {
         // "2019-10-16T17:10:20+0000"
         let dateFormatter = ISO8601DateFormatter()
         var articlesListOrdered: [Article] = []
-        articlesListOrdered = articlesList.sorted(by:{ dateFormatter.date(from: $0.creationDate)?.compare(dateFormatter.date(from: $1.creationDate)!) == .orderedAscending})
+        articlesListOrdered = articlesList.sorted(by:{ dateFormatter.date(from: $0.creationDate)?.compare(dateFormatter.date(from: $1.creationDate)!) == .orderedDescending})
         return articlesListOrdered
     }
     
