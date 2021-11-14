@@ -24,6 +24,8 @@ class ListeViewController: UIViewController {
     
     var pickerCategoryId: Int64 = -1
     
+    var dataTriArticles: [Article] = []
+    
     private var articlesViewModel : ArticlesViewModel!
     private var categoryViewModel : CategoryViewModel!
 
@@ -37,6 +39,7 @@ class ListeViewController: UIViewController {
 
         callViewModelForUIUpdate()
         configureUI()
+        
     }
     
     
@@ -85,6 +88,7 @@ class ListeViewController: UIViewController {
     
     @objc func onClickedDoneButton() {
         self.articlesViewModel.updateWithFilter(pickerCategoryId)
+        dataTriArticles = self.articlesViewModel.articlesFilter
         self.articleTableView.reloadData()
         articleUIPicker.isHidden = true
         self.navigationController?.isToolbarHidden = true
@@ -107,6 +111,7 @@ class ListeViewController: UIViewController {
         self.categoryViewModel = CategoryViewModel()
         self.articlesViewModel.bindArticleViewModelToController = {
             self.categoryViewModel.bindCategoryViewModelToController = {
+                self.dataTriArticles = self.articlesViewModel.articlesData
                 self.articleTableView.reloadData()
             }
         }
@@ -133,6 +138,9 @@ extension ListeViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     }
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         pickerCategoryId = Int64(row + 1)
+        print("pickerCategoryId")
+        print(pickerCategoryId)
+        print("pickerCategoryId")
     }
 }
  
@@ -141,7 +149,7 @@ extension ListeViewController:  UITableViewDataSource, UITableViewDelegate {
     // MARK - UITableView Delegates
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return self.articlesViewModel.articlesData.count
+        return dataTriArticles.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -150,10 +158,9 @@ extension ListeViewController:  UITableViewDataSource, UITableViewDelegate {
         if cell == nil {
             cell = ArticleCell(style: UITableViewCell.CellStyle.default, reuseIdentifier: "cell")
         }
-        if self.articlesViewModel.articlesData.count > 0 {
-            let article = self.articlesViewModel.articlesData[indexPath.row]
+        if dataTriArticles.count > 0 {
+            let article = dataTriArticles[indexPath.row]
             let categoryName = self.categoryViewModel.getNameById(article.categoryId)
-        
             cell?.article = article
             cell?.categoryName = categoryName
 
@@ -170,9 +177,8 @@ extension ListeViewController:  UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("You selected cell #\(indexPath.row)!")
-        let destination = DetailViewController() // Your destination
-        
-        let article = self.articlesViewModel.articlesData[indexPath.row]
+        let destination = DetailViewController()
+        let article = dataTriArticles[indexPath.row]
         let categoryName = self.categoryViewModel.getNameById(article.categoryId)
         destination.article = article
         destination.categoryName = categoryName

@@ -18,6 +18,8 @@ class ArticlesViewModel : NSObject {
     
     var bindArticleViewModelToController : (() -> ()) = {}
     
+    var articlesFilter: [Article] = []
+    
     override init() {
         super.init()
         self.articleApiService =  ArticleApiService()
@@ -39,9 +41,9 @@ class ArticlesViewModel : NSObject {
     
     func filterByCategory(categoryIdFilter: Int64) {
         if categoryIdFilter >= 0 {
-            var articlesFilter: [Article] = []
+           // var articlesFilter: [Article] = []
             articlesFilter = self.articlesData.filter { $0.categoryId == categoryIdFilter}
-            self.articlesData = articlesFilter
+           // self.articlesData = articlesFilter
         }
     }
     
