@@ -95,7 +95,7 @@ class ListeViewController: UIViewController {
     }
     
     @objc func onClickedResetButton() {
-        self.articlesViewModel.updateWithFilter(-1)
+        self.dataTriArticles = self.articlesViewModel.articlesData
         self.articleTableView.reloadData()
         articleUIPicker.isHidden = true
         self.navigationController?.isToolbarHidden = true

@@ -41,9 +41,7 @@ class ArticlesViewModel : NSObject {
     
     func filterByCategory(categoryIdFilter: Int64) {
         if categoryIdFilter >= 0 {
-           // var articlesFilter: [Article] = []
             articlesFilter = self.articlesData.filter { $0.categoryId == categoryIdFilter}
-           // self.articlesData = articlesFilter
         }
     }
     
