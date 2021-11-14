@@ -32,21 +32,15 @@ class ListeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(articleTableView)
-        
-        
+        callViewModelForUIUpdate()
         articleTableView.dataSource = self
         articleTableView.delegate = self
-
-        callViewModelForUIUpdate()
         configureUI()
-        
     }
-    
     
     override func viewDidLayoutSubviews(){
         super.viewDidLayoutSubviews()
         articleTableView.frame = view.bounds
-        
     }
     
     func configureUI() {
@@ -57,7 +51,6 @@ class ListeViewController: UIViewController {
        // navigationController?.navigationBar.prefersLargeTitles = true
         navigationController?.navigationBar.isTranslucent = false
         navigationItem.title = "Articles"
-        //let searchBtn = UIBarButtonItem(barButtonSystemItem: .organize, target: self, action: #selector(self.handleShowSearchBtn))
         let searchBtn = UIBarButtonItem(title: "Filtre", style: .plain, target: self, action: #selector(self.handleShowSearchBtn))
         self.navigationItem.rightBarButtonItem = searchBtn
     }
@@ -115,9 +108,7 @@ class ListeViewController: UIViewController {
                 self.articleTableView.reloadData()
             }
         }
-        
     }
-    
     
  
 }
@@ -138,9 +129,6 @@ extension ListeViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     }
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         pickerCategoryId = Int64(row + 1)
-        print("pickerCategoryId")
-        print(pickerCategoryId)
-        print("pickerCategoryId")
     }
 }
  
@@ -169,10 +157,10 @@ extension ListeViewController:  UITableViewDataSource, UITableViewDelegate {
 
         return cell!
     }
+    
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-
-        return 100.0
+        return 110.0
         }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

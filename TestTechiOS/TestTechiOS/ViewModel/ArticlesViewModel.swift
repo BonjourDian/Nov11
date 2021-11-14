@@ -9,7 +9,11 @@ import Foundation
 
 class ArticlesViewModel : NSObject {
     
-    private var articleApiService : ArticleApiService!
+    private var articleService : ArticleService{
+        //return ArticleMockService()
+        return ArticleApiService()
+    }
+    
     private(set) var articlesData : [Article] = [] {
         didSet {
             self.bindArticleViewModelToController()
@@ -22,12 +26,11 @@ class ArticlesViewModel : NSObject {
     
     override init() {
         super.init()
-        self.articleApiService =  ArticleApiService()
         callGetArticles()
     }
     
     func callGetArticles() {
-        self.articleApiService.getArticles{(articlesData) in
+        self.articleService.getArticles{(articlesData) in
             self.articlesData = articlesData
             self.articlesData = self.orderByDate(self.articlesData)
             self.articlesData = self.orderByUrgency(self.articlesData)

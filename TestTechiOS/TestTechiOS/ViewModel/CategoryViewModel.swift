@@ -9,7 +9,10 @@ import Foundation
 
 class CategoryViewModel: NSObject {
     
-    private var categoryApiService: CategoryApiService!
+    private var categoryService: CategoryService{
+        //return CategoryMockService()
+        return CategoryApiService()
+    }
     
     private(set) var categoriesData : [Category] = [] {
         didSet {
@@ -21,12 +24,11 @@ class CategoryViewModel: NSObject {
     
     override init() {
         super.init()
-        self.categoryApiService =  CategoryApiService()
         callGetCategories()
     }
     
     func callGetCategories() {
-        self.categoryApiService.getCategories{(categoriesData) in
+        self.categoryService.getCategories{(categoriesData) in
             self.categoriesData = categoriesData
         }
     }

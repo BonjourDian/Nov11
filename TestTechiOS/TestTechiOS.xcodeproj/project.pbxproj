@@ -22,7 +22,7 @@
 		845D86D6273E64650083C00E /* CategoryFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845D86D5273E64650083C00E /* CategoryFactory.swift */; };
 		845D86D8273E65630083C00E /* CategoryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845D86D7273E65620083C00E /* CategoryService.swift */; };
 		845D86DA273E65920083C00E /* CategoryApiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845D86D9273E65920083C00E /* CategoryApiService.swift */; };
-		845D86DC273E6F560083C00E /* CategorieMockService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845D86DB273E6F560083C00E /* CategorieMockService.swift */; };
+		845D86DC273E6F560083C00E /* CategoryMockService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845D86DB273E6F560083C00E /* CategoryMockService.swift */; };
 		845D86E2273E9C180083C00E /* ListeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845D86E1273E9C180083C00E /* ListeViewController.swift */; };
 		845D86E4273EA1FB0083C00E /* ArticlesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845D86E3273EA1FB0083C00E /* ArticlesViewModel.swift */; };
 		845D86E6273EBD620083C00E /* ArticleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845D86E5273EBD620083C00E /* ArticleCell.swift */; };
@@ -68,7 +68,7 @@
 		845D86D5273E64650083C00E /* CategoryFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryFactory.swift; sourceTree = "<group>"; };
 		845D86D7273E65620083C00E /* CategoryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryService.swift; sourceTree = "<group>"; };
 		845D86D9273E65920083C00E /* CategoryApiService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryApiService.swift; sourceTree = "<group>"; };
-		845D86DB273E6F560083C00E /* CategorieMockService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategorieMockService.swift; sourceTree = "<group>"; };
+		845D86DB273E6F560083C00E /* CategoryMockService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryMockService.swift; sourceTree = "<group>"; };
 		845D86E1273E9C180083C00E /* ListeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListeViewController.swift; sourceTree = "<group>"; };
 		845D86E3273EA1FB0083C00E /* ArticlesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticlesViewModel.swift; sourceTree = "<group>"; };
 		845D86E5273EBD620083C00E /* ArticleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleCell.swift; sourceTree = "<group>"; };
@@ -217,7 +217,7 @@
 			isa = PBXGroup;
 			children = (
 				845D86D1273DD2C10083C00E /* ArticleMockService.swift */,
-				845D86DB273E6F560083C00E /* CategorieMockService.swift */,
+				845D86DB273E6F560083C00E /* CategoryMockService.swift */,
 			);
 			path = Mock;
 			sourceTree = "<group>";
@@ -364,7 +364,7 @@
 				845D8682273D7EE70083C00E /* AppDelegate.swift in Sources */,
 				845D86E2273E9C180083C00E /* ListeViewController.swift in Sources */,
 				845D86C5273DBD5D0083C00E /* ArticleService.swift in Sources */,
-				845D86DC273E6F560083C00E /* CategorieMockService.swift in Sources */,
+				845D86DC273E6F560083C00E /* CategoryMockService.swift in Sources */,
 				845D86D4273E63DA0083C00E /* Category.swift in Sources */,
 				845D86C1273DA2600083C00E /* ArticleFactory.swift in Sources */,
 				845D86DA273E65920083C00E /* CategoryApiService.swift in Sources */,
