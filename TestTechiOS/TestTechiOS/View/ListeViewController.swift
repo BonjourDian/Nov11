@@ -22,7 +22,7 @@ class ListeViewController: UIViewController {
         return UIPicker
     }()
     
-    var pickerCategoryId: Int64 = 0
+    var pickerCategoryId: Int64 = -1
     
     private var articlesViewModel : ArticlesViewModel!
     private var categoryViewModel : CategoryViewModel!
@@ -75,13 +75,23 @@ class ListeViewController: UIViewController {
         items.append(
             UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: nil, action: nil))
         items.append(
+            UIBarButtonItem(title: "Reset", style: .plain, target: self, action: #selector(self.onClickedResetButton)))
+        items.append(
+            UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: nil, action: nil))
+        items.append(
             UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(self.onClickedDoneButton)))
         toolbarItems = items
     }
     
     @objc func onClickedDoneButton() {
         articlesViewModel.filterArticlesByCategory(pickerCategoryId)
-        print(pickerCategoryId)
+        self.articleTableView.reloadData()
+        articleUIPicker.isHidden = true
+        self.navigationController?.isToolbarHidden = true
+    }
+    
+    @objc func onClickedResetButton() {
+        articlesViewModel.callGetArticles()
         self.articleTableView.reloadData()
         articleUIPicker.isHidden = true
         self.navigationController?.isToolbarHidden = true
@@ -91,9 +101,6 @@ class ListeViewController: UIViewController {
         articleUIPicker.isHidden = true
         self.navigationController?.isToolbarHidden = true
     }
-
-    
-    
     
     func callViewModelForUIUpdate(){
         self.articlesViewModel = ArticlesViewModel()
@@ -124,8 +131,10 @@ extension ListeViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     }
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         let categoryNameList = self.categoryViewModel.getNameList()
-        pickerCategoryId = Int64(row)
         return categoryNameList[row]
+    }
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        pickerCategoryId = Int64(row + 1)
     }
 }
  

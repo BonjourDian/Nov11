@@ -27,6 +27,8 @@ class ArticlesViewModel : NSObject {
     func callGetArticles() {
         self.articleApiService.getArticles{(articlesData) in
             self.articlesData = articlesData
+            self.articlesData = self.orderByDate(self.articlesData)
+            self.articlesData = self.orderByUrgency(self.articlesData)
         }
     }
     
@@ -37,16 +39,18 @@ class ArticlesViewModel : NSObject {
         articlesData = articlesFilter
     }
     
-    func orderByDate(articlesList: [Article]) -> [Article] {
+    func orderByDate(_ articlesList: [Article]) -> [Article] {
         // "2019-10-16T17:10:20+0000"
+        let dateFormatter = ISO8601DateFormatter()
         var articlesListOrdered: [Article] = []
-        
+        articlesListOrdered = articlesList.sorted(by:{ dateFormatter.date(from: $0.creationDate)?.compare(dateFormatter.date(from: $1.creationDate)!) == .orderedAscending})
         return articlesListOrdered
     }
     
-    func orderByUrgency(articlesList: [Article]) -> [Article] {
+    func orderByUrgency(_ articlesList: [Article]) -> [Article] {
         var articlesListOrdered: [Article] = []
+        articlesListOrdered = articlesList.sorted { $0.isUrgent && !$1.isUrgent }
         return articlesListOrdered
     }
-    
+
 }
