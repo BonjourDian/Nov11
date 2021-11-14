@@ -1,25 +1,25 @@
 //
-//  CategorieMockService.swift
+//  CategoryMockService.swift
 //  TestTechiOS
 //
 //  Created by DIAN on 12/11/2021.
 //
 
 
-class CategorieMockService: CategorieService {
+class CategoryMockService: CategoryService {
 
     
-    private let categories: [Categorie] = [
-        Categorie(id:1,name:"Véhicule"),
-        Categorie(id:2,name:"Mode"),
-        Categorie(id:3,name:"Bricolage")
+    private let categories: [Category] = [
+        Category(id:1,name:"Véhicule"),
+        Category(id:2,name:"Mode"),
+        Category(id:3,name:"Bricolage")
     ]
     
-    func getCategories(completion: @escaping ([Categorie]) -> Void) {
+    func getCategories(completion: @escaping ([Category]) -> Void) {
         completion(self.categories)
     }
     
-    func getById(_ id: String, completion: @escaping (Categorie?) -> Void) {
+    func getById(_ id: String, completion: @escaping (Category?) -> Void) {
         
     }
   

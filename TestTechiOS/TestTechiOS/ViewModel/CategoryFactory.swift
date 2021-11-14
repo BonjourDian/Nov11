@@ -1,23 +1,22 @@
 //
-//  CategorieFactory.swift
+//  CategoryFactory.swift
 //  TestTechiOS
 //
 //  Created by DIAN on 12/11/2021.
 //
 
 
-class CategorieFactory {
+class CategoryFactory {
     
-    static func CategorieWith(dictionary: [String: Any]) -> Categorie? {
+    static func categoryWith(dictionary: [String: Any]) -> Category? {
         guard
-     
             let id = dictionary["id"] as? Int64,
             let name = dictionary["name"] as? String
         else {
                 return nil
         }
         
-        return Categorie(id: id,name:name)
+        return Category(id: id,name:name)
     }
     
 }

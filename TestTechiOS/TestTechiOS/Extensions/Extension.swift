@@ -78,3 +78,4 @@ extension Formatter {
 extension FloatingPoint {
     var afficherUnFloat: String { Formatter.decimal.string(for: self) ?? "" }
 }
+

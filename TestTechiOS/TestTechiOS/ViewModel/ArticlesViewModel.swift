@@ -30,5 +30,23 @@ class ArticlesViewModel : NSObject {
         }
     }
     
+    func filterArticlesByCategory(_ categoryIdFilter: Int64) {
+        var articlesFilter: [Article] = []
+        callGetArticles()
+        articlesFilter = articlesData.filter { $0.categoryId == categoryIdFilter}
+        articlesData = articlesFilter
+    }
+    
+    func orderByDate(articlesList: [Article]) -> [Article] {
+        // "2019-10-16T17:10:20+0000"
+        var articlesListOrdered: [Article] = []
+        
+        return articlesListOrdered
+    }
+    
+    func orderByUrgency(articlesList: [Article]) -> [Article] {
+        var articlesListOrdered: [Article] = []
+        return articlesListOrdered
+    }
     
 }

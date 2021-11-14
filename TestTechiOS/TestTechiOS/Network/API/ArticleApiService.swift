@@ -23,17 +23,7 @@ class ArticleApiService: ArticleService {
             }
         }.resume()
     }
-    /*
-    func getDataFromUrl(url: String, completion: @escaping (NSData) -> Void) {
-        let imageUrl = URL(string: url)
-        URLSession.shared.dataTask(with: imageUrl!) { (data, response, error) in
-            DispatchQueue.main.sync {
-                let imageData = NSData(data: data!)
-                completion(imageData)
-            }
-        }.resume()
-    }
-    */
+
     func getById(_ id: String, completion: @escaping (Article?) -> Void) {
         completion(nil)
     }
