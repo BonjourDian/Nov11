@@ -127,7 +127,6 @@ class DetailViewController: UIViewController {
         view.backgroundColor = UIColor.rgb(red: 249, green: 255, blue: 247)
         setupScrollView()
         setupViews()
-  
     }
     
     

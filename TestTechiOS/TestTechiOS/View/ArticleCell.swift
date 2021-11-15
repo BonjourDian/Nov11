@@ -98,10 +98,24 @@ class ArticleCell : UITableViewCell {
     
     func cellUI() {
         
-        articleImage.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: nil, paddingTop: 5, paddingLeft: 15, paddingBottom: 5, paddingRight: 0, width: 130, height: 0, enableInsets: false)
-        articleTitleLabel.anchor(top: topAnchor, left: articleImage.rightAnchor, bottom: nil, right: nil, paddingTop: 20, paddingLeft: 10, paddingBottom: 0, paddingRight: 0, width: frame.size.width/1.5, height: 0, enableInsets: false)
-        articleCategoryName.anchor(top: articleTitleLabel.bottomAnchor, left: articleImage.rightAnchor, bottom: nil, right: nil, paddingTop: 15, paddingLeft: 10, paddingBottom: 0, paddingRight: 0, width: frame.size.width, height: 0, enableInsets: false)
-        articlePrix.anchor(top: articleCategoryName.bottomAnchor, left: articleImage.rightAnchor, bottom: nil, right: nil, paddingTop: 15, paddingLeft: 10, paddingBottom: 0, paddingRight: 0, width: frame.size.width/2, height: 0, enableInsets: false)
+        articleImage.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: nil, paddingTop: 5, paddingLeft: 5, paddingBottom: 5, paddingRight: 0, width: 130, height: 0, enableInsets: false)
+        
+      
+        articleTitleLabel.topAnchor.constraint(equalTo:contentView.topAnchor, constant: 25).isActive = true
+        articleTitleLabel.rightAnchor.constraint(equalTo:articleisUrgent.leftAnchor, constant: 15).isActive = true
+        articleTitleLabel.leftAnchor.constraint(equalTo:articleImage.rightAnchor, constant: 15).isActive = true
+        
+        
+        articleCategoryName.topAnchor.constraint(equalTo:articleTitleLabel.bottomAnchor, constant: 15).isActive = true
+        articleCategoryName.rightAnchor.constraint(equalTo:articleisUrgent.leftAnchor, constant: 15).isActive = true
+        articleCategoryName.leftAnchor.constraint(equalTo:articleImage.rightAnchor, constant: 15).isActive = true
+        
+        
+        articlePrix.topAnchor.constraint(equalTo:articleCategoryName.bottomAnchor, constant: 15).isActive = true
+        articlePrix.rightAnchor.constraint(equalTo:articleisUrgent.leftAnchor, constant: 15).isActive = true
+        articlePrix.leftAnchor.constraint(equalTo:articleImage.rightAnchor, constant: 15).isActive = true
+        
+        
         articleisUrgent.anchor(top: topAnchor, left: nil, bottom: bottomAnchor, right: rightAnchor, paddingTop: 5, paddingLeft: 5, paddingBottom: 5, paddingRight: 5, width: 30, height: 0, enableInsets: false)
     }
     
