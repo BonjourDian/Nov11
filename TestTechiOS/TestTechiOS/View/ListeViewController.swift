@@ -54,7 +54,7 @@ class ListeViewController: UIViewController {
         self.articlesViewModel.bindArticleViewModelToController = {
             self.categoryViewModel.bindCategoryViewModelToController = {
                 self.dataTriArticles = self.articlesViewModel.articlesData
-               // self.articleTableView.reloadData()
+                self.articleTableView.reloadData()
             }
         }
     }
@@ -144,7 +144,7 @@ extension ListeViewController: UIPickerViewDelegate, UIPickerViewDataSource {
  
 
 extension ListeViewController:  UITableViewDataSource, UITableViewDelegate {
-    // MARK - UITableView Delegates
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         return dataTriArticles.count
@@ -161,7 +161,7 @@ extension ListeViewController:  UITableViewDataSource, UITableViewDelegate {
     
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 150.0
+        return 190.0
         }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

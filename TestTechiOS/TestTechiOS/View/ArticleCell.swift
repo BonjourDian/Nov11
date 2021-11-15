@@ -98,16 +98,19 @@ class ArticleCell : UITableViewCell {
     
     func cellUI() {
         
-        articleImage.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: nil, paddingTop: 5, paddingLeft: 5, paddingBottom: 5, paddingRight: 0, width: 130, height: 0, enableInsets: false)
+        articleImage.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 2.5).isActive = true
+        articleImage.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 0).isActive = true
+        articleImage.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 2/5).isActive = true
+        articleImage.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -2.5).isActive = true
         
-      
+        
         articleTitleLabel.topAnchor.constraint(equalTo:contentView.topAnchor, constant: 25).isActive = true
-        articleTitleLabel.rightAnchor.constraint(equalTo:articleisUrgent.leftAnchor, constant: 15).isActive = true
+        articleTitleLabel.rightAnchor.constraint(equalTo:articleisUrgent.leftAnchor, constant: -5).isActive = true
         articleTitleLabel.leftAnchor.constraint(equalTo:articleImage.rightAnchor, constant: 15).isActive = true
         
         
         articleCategoryName.topAnchor.constraint(equalTo:articleTitleLabel.bottomAnchor, constant: 15).isActive = true
-        articleCategoryName.rightAnchor.constraint(equalTo:articleisUrgent.leftAnchor, constant: 15).isActive = true
+        articleCategoryName.rightAnchor.constraint(equalTo:articleisUrgent.leftAnchor, constant: -5).isActive = true
         articleCategoryName.leftAnchor.constraint(equalTo:articleImage.rightAnchor, constant: 15).isActive = true
         
         
@@ -115,8 +118,11 @@ class ArticleCell : UITableViewCell {
         articlePrix.rightAnchor.constraint(equalTo:articleisUrgent.leftAnchor, constant: 15).isActive = true
         articlePrix.leftAnchor.constraint(equalTo:articleImage.rightAnchor, constant: 15).isActive = true
         
+    
         
-        articleisUrgent.anchor(top: topAnchor, left: nil, bottom: bottomAnchor, right: rightAnchor, paddingTop: 5, paddingLeft: 5, paddingBottom: 5, paddingRight: 5, width: 30, height: 0, enableInsets: false)
+        articleisUrgent.centerYAnchor.constraint(equalTo: contentView.centerYAnchor).isActive = true
+        articleisUrgent.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -5).isActive = true
+        articleisUrgent.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 1/9).isActive = true
     }
     
     

@@ -21,10 +21,8 @@ class DetailViewController: UIViewController {
             if ((article?.isUrgent) != nil) {
                 if article!.isUrgent {
                     articleisUrgent.text = "🔥 URGENT"
-                    print( article!.isUrgent )
                 } else {
                     articleisUrgent.text = "PAS urgent"
-                    print( article!.isUrgent )
                 }
             }
         }
@@ -52,7 +50,6 @@ class DetailViewController: UIViewController {
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
         }()
-    
     
     
     private var articleImage: UIImageView = {
@@ -149,12 +146,12 @@ class DetailViewController: UIViewController {
     func setupViews(){
         
         contentView.addSubview(articleImage)
-        articleImage.anchor(top: contentView.topAnchor, left:contentView.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 5, paddingLeft: 5, paddingBottom: 5, paddingRight: 5, width:300, height: 300, enableInsets: false)
-        
-      /*  articleImage.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
-        articleImage.topAnchor.constraint(equalTo:  contentView.topAnchor).isActive = true
-        articleImage.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 3/4).isActive = true
-        */
+        articleImage.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
+        articleImage.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
+        articleImage.leftAnchor.constraint(equalTo: contentView.leftAnchor).isActive = true
+        articleImage.rightAnchor.constraint(equalTo: contentView.rightAnchor).isActive = true
+        articleImage.widthAnchor.constraint(equalTo: contentView.widthAnchor).isActive = true
+        articleImage.heightAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 3/4).isActive = true
         
         
         contentView.addSubview(articleTitleLabel)
