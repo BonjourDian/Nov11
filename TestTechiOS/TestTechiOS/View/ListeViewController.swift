@@ -13,7 +13,8 @@ class ListeViewController: UIViewController {
     
     private let articleTableView: UITableView = {
         let articleTableView = UITableView()
-        articleTableView.register(UITableViewCell.self,forCellReuseIdentifier: "cell")
+        articleTableView.register(ArticleCell.self, forCellReuseIdentifier : "cell")
+        articleTableView.backgroundView = UIImageView(image: UIImage(named: "loading"))
         return articleTableView
     }()
     
@@ -24,7 +25,11 @@ class ListeViewController: UIViewController {
     
     var pickerCategoryId: Int64 = -1
     
-    var dataTriArticles: [Article] = []
+    var dataTriArticles:[Article] = [] {
+        didSet {
+                self.articleTableView.reloadData()
+            }
+        }
     
     private var articlesViewModel : ArticlesViewModel!
     private var categoryViewModel : CategoryViewModel!
@@ -32,25 +37,41 @@ class ListeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(articleTableView)
-        callViewModelForUIUpdate()
         articleTableView.dataSource = self
         articleTableView.delegate = self
-        configureUI()
+        TableViewUI()
+        navigationUI()
     }
     
-    override func viewDidLayoutSubviews(){
-        super.viewDidLayoutSubviews()
-        articleTableView.frame = view.bounds
+    override func viewWillAppear(_ animated: Bool) {
+        callViewModelForUIUpdate()
+    }
+
+    
+    func callViewModelForUIUpdate(){
+        self.articlesViewModel = ArticlesViewModel()
+        self.categoryViewModel = CategoryViewModel()
+        self.articlesViewModel.bindArticleViewModelToController = {
+            self.categoryViewModel.bindCategoryViewModelToController = {
+                self.dataTriArticles = self.articlesViewModel.articlesData
+               // self.articleTableView.reloadData()
+            }
+        }
     }
     
-    func configureUI() {
-        view.backgroundColor = .white
+    func TableViewUI() {
+        articleTableView.translatesAutoresizingMaskIntoConstraints = false
+        articleTableView.topAnchor.constraint(equalTo:view.safeAreaLayoutGuide.topAnchor).isActive = true
+        articleTableView.leadingAnchor.constraint(equalTo:view.safeAreaLayoutGuide.leadingAnchor).isActive = true
+        articleTableView.trailingAnchor.constraint(equalTo:view.safeAreaLayoutGuide.trailingAnchor).isActive = true
+        articleTableView.bottomAnchor.constraint(equalTo:view.safeAreaLayoutGuide.bottomAnchor).isActive = true
+    }
         
+    func navigationUI() {
+        navigationItem.title = "Articles"
         navigationController?.navigationBar.barStyle = .black
         navigationController?.navigationBar.tintColor = .white
-       // navigationController?.navigationBar.prefersLargeTitles = true
         navigationController?.navigationBar.isTranslucent = false
-        navigationItem.title = "Articles"
         let searchBtn = UIBarButtonItem(title: "Filtre", style: .plain, target: self, action: #selector(self.handleShowSearchBtn))
         self.navigationItem.rightBarButtonItem = searchBtn
     }
@@ -99,17 +120,6 @@ class ListeViewController: UIViewController {
         self.navigationController?.isToolbarHidden = true
     }
     
-    func callViewModelForUIUpdate(){
-        self.articlesViewModel = ArticlesViewModel()
-        self.categoryViewModel = CategoryViewModel()
-        self.articlesViewModel.bindArticleViewModelToController = {
-            self.categoryViewModel.bindCategoryViewModelToController = {
-                self.dataTriArticles = self.articlesViewModel.articlesData
-                self.articleTableView.reloadData()
-            }
-        }
-    }
-    
  
 }
 
@@ -141,30 +151,20 @@ extension ListeViewController:  UITableViewDataSource, UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-
-        var cell : ArticleCell? = (tableView.dequeueReusableCell(withIdentifier: "cell") as? ArticleCell)
-        if cell == nil {
-            cell = ArticleCell(style: UITableViewCell.CellStyle.default, reuseIdentifier: "cell")
-        }
-        if dataTriArticles.count > 0 {
-            let article = dataTriArticles[indexPath.row]
-            let categoryName = self.categoryViewModel.getNameById(article.categoryId)
-            cell?.article = article
-            cell?.categoryName = categoryName
-
-        }
-        cell?.textLabel?.numberOfLines = 0
-
-        return cell!
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! ArticleCell
+        let article = dataTriArticles[indexPath.row]
+        let categoryName = self.categoryViewModel.getNameById(article.categoryId)
+        cell.article = article
+        cell.categoryName = categoryName
+        return cell
     }
     
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 110.0
+        return 150.0
         }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("You selected cell #\(indexPath.row)!")
         let destination = DetailViewController()
         let article = dataTriArticles[indexPath.row]
         let categoryName = self.categoryViewModel.getNameById(article.categoryId)
