@@ -9,9 +9,14 @@ import Foundation
 
 class CategoryViewModel: NSObject {
     
+    var isTesting: Bool = false
+    
     private var categoryService: CategoryService{
-        //return CategoryMockService()
-        return CategoryApiService()
+        if isTesting {
+            return CategoryMockService()
+        } else {
+            return CategoryApiService()
+        }
     }
     
     private(set) var categoriesData : [Category] = [] {

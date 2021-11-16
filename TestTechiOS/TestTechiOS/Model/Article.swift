@@ -5,7 +5,7 @@
 //  Created by DIAN on 11/11/2021.
 //
 
-struct Article {
+struct Article: Equatable {
     var id: Int64
     var categoryId: Int64
     var title: String
@@ -15,10 +15,9 @@ struct Article {
     var creationDate: String
     var isUrgent: Bool
     
-    struct ImagesUrl{
+    struct ImagesUrl: Equatable{
         var small: String?
         var thumb: String?
     }
     
 }
-

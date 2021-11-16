@@ -23,7 +23,7 @@ class ListeViewController: UIViewController {
         return UIPicker
     }()
     
-    var pickerCategoryId: Int64 = -1
+    var pickerCategoryId: Int64 = 1
     
     var dataTriArticles:[Article] = [] {
         didSet {
@@ -36,15 +36,12 @@ class ListeViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        callViewModelForUIUpdate()
         view.addSubview(articleTableView)
         articleTableView.dataSource = self
         articleTableView.delegate = self
         TableViewUI()
         navigationUI()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        callViewModelForUIUpdate()
     }
 
     
@@ -54,6 +51,7 @@ class ListeViewController: UIViewController {
         self.articlesViewModel.bindArticleViewModelToController = {
             self.categoryViewModel.bindCategoryViewModelToController = {
                 self.dataTriArticles = self.articlesViewModel.articlesData
+                self.articleTableView.backgroundView = UIImageView(image: nil)
                 self.articleTableView.reloadData()
             }
         }

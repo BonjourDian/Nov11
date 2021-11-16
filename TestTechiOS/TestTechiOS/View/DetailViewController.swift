@@ -16,7 +16,7 @@ class DetailViewController: UIViewController {
             articleTitleLabel.text = article?.title
             articlePrix.text = "Prix: " + (article?.price.afficherUnFloat)! + " €"
             articleDescription.text = "Description: " + "\n\n" + (article?.description)!
-            articleCreationDate.text = "Date: " + (article?.creationDate)!
+            articleCreationDate.text = "Date: " + dateCreation()
             
             if ((article?.isUrgent) != nil) {
                 if article!.isUrgent {
@@ -127,6 +127,18 @@ class DetailViewController: UIViewController {
     }
     
     
+    func dateCreation() -> String{
+        let dateFormatter = ISO8601DateFormatter()
+        let date = dateFormatter.date(from:article!.creationDate)!
+        let DateFr = DateFormatter()
+        DateFr.dateStyle = .medium
+        DateFr.timeStyle = .medium
+        DateFr.locale  = Locale(identifier: "FR-fr")
+        let DateFrance = DateFr.string(from: date)
+        return DateFrance
+    }
+    
+    
     func setupScrollView(){
         
         view.addSubview(scrollView)
@@ -189,7 +201,7 @@ class DetailViewController: UIViewController {
         articleDescription.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
         articleDescription.topAnchor.constraint(equalTo:articlePrix.bottomAnchor, constant: 35).isActive = true
         articleDescription.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 3/4).isActive = true
-        articleDescription.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
+        articleDescription.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -35).isActive = true
         
     }
     

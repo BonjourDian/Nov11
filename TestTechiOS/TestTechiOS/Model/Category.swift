@@ -6,8 +6,7 @@
 //
 
 
-struct Category {
+struct Category: Equatable {
     var id: Int64
     var name: String
 }
-

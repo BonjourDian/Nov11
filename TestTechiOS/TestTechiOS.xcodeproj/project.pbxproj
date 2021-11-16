@@ -30,6 +30,7 @@
 		845D86F4273FD7090083C00E /* CategoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845D86F3273FD7090083C00E /* CategoryViewModel.swift */; };
 		845D86F6274000160083C00E /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845D86F5274000160083C00E /* DetailViewController.swift */; };
 		8465CC782741C55D00A58592 /* ArticlesViewModelTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8465CC772741C55C00A58592 /* ArticlesViewModelTestCase.swift */; };
+		8479CDC6274325A50006ECCD /* CategoryViewModelTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8479CDC5274325A50006ECCD /* CategoryViewModelTestCase.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -77,6 +78,7 @@
 		845D86F3273FD7090083C00E /* CategoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryViewModel.swift; sourceTree = "<group>"; };
 		845D86F5274000160083C00E /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		8465CC772741C55C00A58592 /* ArticlesViewModelTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticlesViewModelTestCase.swift; sourceTree = "<group>"; };
+		8479CDC5274325A50006ECCD /* CategoryViewModelTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryViewModelTestCase.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -145,6 +147,7 @@
 			children = (
 				845D8698273D7EEC0083C00E /* TestTechiOSTests.swift */,
 				8465CC772741C55C00A58592 /* ArticlesViewModelTestCase.swift */,
+				8479CDC5274325A50006ECCD /* CategoryViewModelTestCase.swift */,
 			);
 			path = TestTechiOSTests;
 			sourceTree = "<group>";
@@ -381,6 +384,7 @@
 			files = (
 				845D8699273D7EEC0083C00E /* TestTechiOSTests.swift in Sources */,
 				8465CC782741C55D00A58592 /* ArticlesViewModelTestCase.swift in Sources */,
+				8479CDC6274325A50006ECCD /* CategoryViewModelTestCase.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

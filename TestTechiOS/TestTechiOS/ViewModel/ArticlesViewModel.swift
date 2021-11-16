@@ -9,9 +9,14 @@ import Foundation
 
 class ArticlesViewModel : NSObject {
     
+    var isTesting: Bool = false
+    
     private var articleService : ArticleService{
-        //return ArticleMockService()
-        return ArticleApiService()
+        if isTesting {
+            return ArticleMockService()
+        } else {
+            return ArticleApiService()
+        }
     }
     
     private(set) var articlesData : [Article] = [] {
