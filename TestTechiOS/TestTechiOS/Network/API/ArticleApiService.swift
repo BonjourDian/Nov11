@@ -11,7 +11,7 @@ class ArticleApiService: ArticleService {
     
     private let sourcesURL = URL(string: "https://raw.githubusercontent.com/leboncoin/paperclip/master/listing.json")!
     
-    func getArticles(completion: @escaping ([Article]) -> Void) {
+    func getArticlesAPI(completion: @escaping ([Article]) -> Void) {
         URLSession.shared.dataTask(with: sourcesURL) { (data, res, err) in
             DispatchQueue.main.sync {
                 guard let d = data,let json = try? JSONSerialization.jsonObject(with: d, options: .allowFragments) as? [[String: Any]] else {

@@ -64,7 +64,7 @@ class ArticleMockService: ArticleService {
     ]
 
      
-    func getArticles(completion: @escaping ([Article]) -> Void) {
+    func getArticlesAPI(completion: @escaping ([Article]) -> Void) {
         completion(self.articles)
     }
     

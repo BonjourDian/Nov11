@@ -10,7 +10,6 @@ import UIKit
 
 class ListeViewController: UIViewController {
     
-    
     private let articleTableView: UITableView = {
         let articleTableView = UITableView()
         articleTableView.register(ArticleCell.self, forCellReuseIdentifier : "cell")
@@ -28,18 +27,24 @@ class ListeViewController: UIViewController {
     var dataTriArticles:[Article] = [] {
         didSet {
                 self.articleTableView.reloadData()
+                self.articleTableView.backgroundView = UIImageView(image: nil)
             }
         }
+    
+    var isFilterActive: Bool = false
+    
+    var categoryNameList: [String] = []
     
     private var articlesViewModel : ArticlesViewModel!
     private var categoryViewModel : CategoryViewModel!
 
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        callViewModelForUIUpdate()
-        view.addSubview(articleTableView)
         articleTableView.dataSource = self
         articleTableView.delegate = self
+        view.addSubview(articleTableView)
+        callViewModelForUIUpdate()
         TableViewUI()
         navigationUI()
     }
@@ -48,13 +53,24 @@ class ListeViewController: UIViewController {
     func callViewModelForUIUpdate(){
         self.articlesViewModel = ArticlesViewModel()
         self.categoryViewModel = CategoryViewModel()
+        
         self.articlesViewModel.bindArticleViewModelToController = {
-            self.categoryViewModel.bindCategoryViewModelToController = {
-                self.dataTriArticles = self.articlesViewModel.articlesData
-                self.articleTableView.backgroundView = UIImageView(image: nil)
-                self.articleTableView.reloadData()
-            }
+            self.updateArticlesWithData()
         }
+        self.categoryViewModel.bindCategoryViewModelToController = {
+            self.updateCategoriesWithData()
+        }
+        
+        self.articleTableView.reloadData()
+        
+    }
+    
+    func updateArticlesWithData() {
+        dataTriArticles = self.articlesViewModel.getArticles(filter: self.isFilterActive)
+    }
+    
+    func updateCategoriesWithData() {
+        categoryNameList = self.categoryViewModel.getNameList()
     }
     
     func TableViewUI() {
@@ -99,16 +115,16 @@ class ListeViewController: UIViewController {
     }
     
     @objc func onClickedDoneButton() {
-        self.articlesViewModel.updateWithFilter(pickerCategoryId)
-        dataTriArticles = self.articlesViewModel.articlesFilter
-        self.articleTableView.reloadData()
+        self.isFilterActive = true
+        self.articlesViewModel.updateWithFilter(self.pickerCategoryId)
+        self.dataTriArticles = self.articlesViewModel.getArticles(filter: self.isFilterActive)
         articleUIPicker.isHidden = true
         self.navigationController?.isToolbarHidden = true
     }
     
     @objc func onClickedResetButton() {
-        self.dataTriArticles = self.articlesViewModel.articlesData
-        self.articleTableView.reloadData()
+        self.isFilterActive = false
+        self.dataTriArticles = self.articlesViewModel.getArticles(filter: self.isFilterActive)
         articleUIPicker.isHidden = true
         self.navigationController?.isToolbarHidden = true
     }
@@ -128,12 +144,12 @@ extension ListeViewController: UIPickerViewDelegate, UIPickerViewDataSource {
        return 1
     }
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        let categoryNameList = self.categoryViewModel.getNameList()
-        return categoryNameList.count
+        self.categoryNameList = self.categoryViewModel.getNameList()
+        return self.categoryNameList.count
     }
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        let categoryNameList = self.categoryViewModel.getNameList()
-        return categoryNameList[row]
+        self.categoryNameList = self.categoryViewModel.getNameList()
+        return self.categoryNameList[row]
     }
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         pickerCategoryId = Int64(row + 1)
@@ -144,17 +160,20 @@ extension ListeViewController: UIPickerViewDelegate, UIPickerViewDataSource {
 extension ListeViewController:  UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
         return dataTriArticles.count
     }
+    
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! ArticleCell
+        let cell: ArticleCell = (tableView.dequeueReusableCell(withIdentifier: "cell") as! ArticleCell)
+        
         let article = dataTriArticles[indexPath.row]
         let categoryName = self.categoryViewModel.getNameById(article.categoryId)
         cell.article = article
         cell.categoryName = categoryName
+
         return cell
+        
     }
     
 

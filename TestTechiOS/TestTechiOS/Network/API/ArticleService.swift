@@ -7,7 +7,7 @@
 
 
 protocol ArticleService{
-    func getArticles(completion: @escaping ([Article]) -> Void)
+    func getArticlesAPI(completion: @escaping ([Article]) -> Void)
     func getById(_ id: String, completion: @escaping (Article?) -> Void)
 }
 

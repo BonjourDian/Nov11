@@ -31,27 +31,33 @@ class ArticlesViewModel : NSObject {
     
     override init() {
         super.init()
-        callGetArticles()
+        callGetArticlesAPI()
     }
     
-    func callGetArticles() {
-        self.articleService.getArticles{(articlesData) in
+    func callGetArticlesAPI() {
+        self.articleService.getArticlesAPI{(articlesData) in
             self.articlesData = articlesData
             self.articlesData = self.orderByDate(self.articlesData)
             self.articlesData = self.orderByUrgency(self.articlesData)
         }
     }
     
-    func updateWithFilter(_ categoryIdFilter: Int64) {
-        callGetArticles()
-        self.filterByCategory(categoryIdFilter: categoryIdFilter)
+    func getArticles(filter: Bool) -> [Article] {
+        var articles: [Article] = []
+        if filter {
+            articles = articlesFilter
+        } else {
+            articles = articlesData
+        }
+        return articles
     }
     
-    func filterByCategory(categoryIdFilter: Int64) {
+    func updateWithFilter(_ categoryIdFilter: Int64) {
         if categoryIdFilter >= 0 {
             articlesFilter = self.articlesData.filter { $0.categoryId == categoryIdFilter}
         }
     }
+    
     
     func orderByDate(_ articlesList: [Article]) -> [Article] {
         // "2019-10-16T17:10:20+0000"
