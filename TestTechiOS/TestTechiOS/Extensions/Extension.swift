@@ -24,6 +24,7 @@ extension UIImageView {
     }
 }
 
+
 extension Formatter {
     static let decimal: NumberFormatter = {
         let numberFormatter = NumberFormatter()
@@ -34,9 +35,12 @@ extension Formatter {
         return numberFormatter
     }()
 }
+
+
 extension FloatingPoint {
     var afficherUnFloat: String { Formatter.decimal.string(for: self) ?? "" }
 }
+
 
 extension UIColor {
     static func rgb(red: CGFloat, green: CGFloat, blue: CGFloat) -> UIColor {

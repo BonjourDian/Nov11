@@ -8,6 +8,8 @@
 import Foundation
 
 class ArticleApiService: ArticleService {
+/// Ce service fait des requêtes GET sur le site "leboncoin" pour récupérer la liste des articles au format json
+/// Les données json sont mises en forme en un modèle Article
     
     private let sourcesURL = URL(string: "https://raw.githubusercontent.com/leboncoin/paperclip/master/listing.json")!
     

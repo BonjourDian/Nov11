@@ -7,7 +7,8 @@
 
 
 class CategoryMockService: CategoryService {
-
+/// Cette classe est utilisée pour les tests unitaires.
+/// Elle simule une API en envoyant une liste de catégories
     
     private let categories: [Category] = [
         Category(id:1,name:"Véhicule"),

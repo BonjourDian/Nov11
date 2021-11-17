@@ -9,7 +9,9 @@ import UIKit
 
 
 class ListeViewController: UIViewController {
-    
+/// Ce controller affiche la liste déroulante des articles et un sous-menu pour sélectionner un filtre par catégorie
+
+// MARK: - Déclaration des variables
     private let articleTableView: UITableView = {
         let articleTableView = UITableView()
         articleTableView.register(ArticleCell.self, forCellReuseIdentifier : "cell")
@@ -38,7 +40,7 @@ class ListeViewController: UIViewController {
     private var articlesViewModel : ArticlesViewModel!
     private var categoryViewModel : CategoryViewModel!
 
-
+// MARK: - Cycle de vie
     override func viewDidLoad() {
         super.viewDidLoad()
         articleTableView.dataSource = self
@@ -49,8 +51,9 @@ class ListeViewController: UIViewController {
         navigationUI()
     }
 
-    
+
     func callViewModelForUIUpdate(){
+        /// Initialisation des liens avec les viewmodel
         self.articlesViewModel = ArticlesViewModel()
         self.categoryViewModel = CategoryViewModel()
         
@@ -66,13 +69,16 @@ class ListeViewController: UIViewController {
     }
     
     func updateArticlesWithData() {
+        /// Récupération de la liste des articles
         dataTriArticles = self.articlesViewModel.getArticles(filter: self.isFilterActive)
     }
     
     func updateCategoriesWithData() {
+        /// Récupération de la liste des catégories
         categoryNameList = self.categoryViewModel.getNameList()
     }
     
+// MARK: - Génération des vues
     func TableViewUI() {
         articleTableView.translatesAutoresizingMaskIntoConstraints = false
         articleTableView.topAnchor.constraint(equalTo:view.safeAreaLayoutGuide.topAnchor).isActive = true
@@ -115,6 +121,7 @@ class ListeViewController: UIViewController {
     }
     
     @objc func onClickedDoneButton() {
+        /// Bouton pour valider la sélection d'un filtre par catégorie
         self.isFilterActive = true
         self.articlesViewModel.updateWithFilter(self.pickerCategoryId)
         self.dataTriArticles = self.articlesViewModel.getArticles(filter: self.isFilterActive)
@@ -123,6 +130,7 @@ class ListeViewController: UIViewController {
     }
     
     @objc func onClickedResetButton() {
+        /// Bouton pour annuler le filtre
         self.isFilterActive = false
         self.dataTriArticles = self.articlesViewModel.getArticles(filter: self.isFilterActive)
         articleUIPicker.isHidden = true
@@ -130,6 +138,7 @@ class ListeViewController: UIViewController {
     }
     
     @objc func onClickedCancelButton() {
+        /// Bouton pour annuler et revenir à la liste des articles
         articleUIPicker.isHidden = true
         self.navigationController?.isToolbarHidden = true
     }
@@ -137,8 +146,9 @@ class ListeViewController: UIViewController {
  
 }
 
-
+// MARK: - PickerView
 extension ListeViewController: UIPickerViewDelegate, UIPickerViewDataSource {
+    /// Ce menu picker liste les catégories
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
        return 1
@@ -156,8 +166,9 @@ extension ListeViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     }
 }
  
-
+// MARK: - TableView
 extension ListeViewController:  UITableViewDataSource, UITableViewDelegate {
+    /// Cette extension permet de peupler le tableau avec une cellule par article
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return dataTriArticles.count
@@ -182,6 +193,7 @@ extension ListeViewController:  UITableViewDataSource, UITableViewDelegate {
         }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        /// Cette fonction permet de naviguer vers la vue détail d'un article
         let destination = DetailViewController()
         let article = dataTriArticles[indexPath.row]
         let categoryName = self.categoryViewModel.getNameById(article.categoryId)

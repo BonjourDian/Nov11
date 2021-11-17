@@ -7,6 +7,8 @@
 
 
 class ArticleMockService: ArticleService {
+/// Cette classe est utilisée pour les tests unitaires.
+/// Elle simule une API en envoyant une liste d'articles
     
     private let articles: [Article] = [
         Article(

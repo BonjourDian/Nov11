@@ -79,18 +79,20 @@ class ArticlesViewModelTestCase: XCTestCase {
         
     }
 
-    func testCallGetArticles() throws {
+    func testCallGetArticlesAPI() throws {
         // This is an example of a functional test case.
         // Use XCTAssert and related functions to verify your tests produce the correct results.
         XCTAssert(articlesViewModel.articlesData == [])
         
-        articlesViewModel.callGetArticles()
+        articlesViewModel.callGetArticlesAPI()
         
         XCTAssert(articlesViewModel.articlesData == [secondArticle, fourthArticle, thirdArticle, firstArticle])
     }
     
     func testUpdateWithFilter() throws {
         let categoryIdFilter: Int64 = 2
+        
+        articlesViewModel.callGetArticlesAPI()
         
         articlesViewModel.updateWithFilter(categoryIdFilter)
         

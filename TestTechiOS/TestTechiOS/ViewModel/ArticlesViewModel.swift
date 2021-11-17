@@ -8,7 +8,9 @@
 import Foundation
 
 class ArticlesViewModel : NSObject {
-    
+/// Ce viewmodel récupère la liste des articles auprès du service API et les met à disposition des vues. Il comporte également des fonctions pour trier et filtrer les données.
+
+// MARK: - Déclaration des variables
     var isTesting: Bool = false
     
     private var articleService : ArticleService{
@@ -28,13 +30,17 @@ class ArticlesViewModel : NSObject {
     var bindArticleViewModelToController : (() -> ()) = {}
     
     var articlesFilter: [Article] = []
-    
+
+// MARK: - Initialisation du VueModel
     override init() {
         super.init()
         callGetArticlesAPI()
     }
+
+// MARK: - Définition des fonctions
     
     func callGetArticlesAPI() {
+        /// Cette fonction récupère la liste des articles et les trie par date puis par urgence
         self.articleService.getArticlesAPI{(articlesData) in
             self.articlesData = articlesData
             self.articlesData = self.orderByDate(self.articlesData)
@@ -43,6 +49,7 @@ class ArticlesViewModel : NSObject {
     }
     
     func getArticles(filter: Bool) -> [Article] {
+        /// Cette fonction renvoit la liste des articles complète ou la liste des articles filtrée par catégorie
         var articles: [Article] = []
         if filter {
             articles = articlesFilter
@@ -60,7 +67,7 @@ class ArticlesViewModel : NSObject {
     
     
     func orderByDate(_ articlesList: [Article]) -> [Article] {
-        // "2019-10-16T17:10:20+0000"
+        // Info - Format de date: "2019-10-16T17:10:20+0000"
         let dateFormatter = ISO8601DateFormatter()
         var articlesListOrdered: [Article] = []
         articlesListOrdered = articlesList.sorted(by:{ dateFormatter.date(from: $0.creationDate)?.compare(dateFormatter.date(from: $1.creationDate)!) == .orderedDescending})

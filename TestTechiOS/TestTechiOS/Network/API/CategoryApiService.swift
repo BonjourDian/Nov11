@@ -8,6 +8,8 @@
 import Foundation
 
 class CategoryApiService: CategoryService {
+/// Ce service fait des requêtes GET sur le site "leboncoin" pour récupérer la liste des catégories au format json
+/// Les données json sont mises en forme en un modèle Category
     
     private let sourcesURL = URL(string: "https://raw.githubusercontent.com/leboncoin/paperclip/master/categories.json")!
     

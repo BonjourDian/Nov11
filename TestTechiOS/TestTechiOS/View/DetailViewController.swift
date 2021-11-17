@@ -8,7 +8,9 @@
 import UIKit
 
 class DetailViewController: UIViewController {
+/// Cette vue affiche les détails d'un article
     
+// MARK: - Déclaration des variables
     var article : Article? {
         
         didSet {
@@ -118,7 +120,7 @@ class DetailViewController: UIViewController {
         return label
     }()
     
-    
+// MARK: - Cycle de vie
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.rgb(red: 249, green: 255, blue: 247)
@@ -126,7 +128,7 @@ class DetailViewController: UIViewController {
         setupViews()
     }
     
-    
+// MARK: - Fonction de formattage des dates
     func dateCreation() -> String{
         let dateFormatter = ISO8601DateFormatter()
         let date = dateFormatter.date(from:article!.creationDate)!
@@ -138,7 +140,7 @@ class DetailViewController: UIViewController {
         return DateFrance
     }
     
-    
+// MARK: - Génération des vues
     func setupScrollView(){
         
         view.addSubview(scrollView)

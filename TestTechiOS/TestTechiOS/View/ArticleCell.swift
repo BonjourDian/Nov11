@@ -9,7 +9,9 @@ import UIKit
 
 
 class ArticleCell : UITableViewCell {
+/// Cette vue met en forme une cellule avec une image et les informations de titre, prix et urgence d'un article
     
+// MARK: - Déclaration des variables
     var article : Article? {
         didSet {
            guard let articleItem = article else {return}
@@ -83,7 +85,7 @@ class ArticleCell : UITableViewCell {
         return label
     }()
     
-    
+// MARK: - Initialisation de la cellule
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style,reuseIdentifier: reuseIdentifier)
         contentView.addSubview(articleImage)
@@ -93,9 +95,9 @@ class ArticleCell : UITableViewCell {
         contentView.addSubview(articleisUrgent)
         cellUI()
     }
+
     
-    
-    
+// MARK: - Définition des contraintes
     func cellUI() {
         
         articleImage.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 2.5).isActive = true

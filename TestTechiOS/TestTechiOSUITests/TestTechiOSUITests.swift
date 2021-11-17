@@ -22,13 +22,37 @@ class TestTechiOSUITests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
 
-    func testExample() throws {
+    func testAppUI() throws {
         // UI tests must launch the application that they test.
         let app = XCUIApplication()
         app.launch()
-
-        // Use recording to get started writing UI tests.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+        
+        let firstCell = app.tables.cells.element(boundBy: 0)
+        
+        firstCell.tap()
+        sleep(1)
+        XCUIApplication().navigationBars["TestTechiOS.DetailView"].buttons["Articles"].tap()
+        sleep(1)
+        
+        let filtreButton = app.navigationBars["Articles"].buttons["Filtre"]
+        
+        filtreButton.tap()
+        sleep(1)
+        app/*@START_MENU_TOKEN@*/.pickerWheels["Véhicule"]/*[[".pickers.pickerWheels[\"Véhicule\"]",".pickerWheels[\"Véhicule\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.swipeUp()
+        sleep(1)
+        
+        let toolbar = app.toolbars["Toolbar"]
+        
+        toolbar.buttons["Done"].tap()
+        sleep(1)
+        filtreButton.tap()
+        sleep(1)
+        toolbar.buttons["Reset"].tap()
+        sleep(1)
+        filtreButton.tap()
+        sleep(1)
+        toolbar.buttons["Cancel"].tap()
+        sleep(1)
     }
 
     func testLaunchPerformance() throws {
