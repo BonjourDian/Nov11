@@ -6,7 +6,7 @@
 //
 
 
-struct Category: Equatable {
+struct Category: Equatable, Codable {
     var id: Int64
     var name: String
 }

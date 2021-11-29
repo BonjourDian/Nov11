@@ -12,19 +12,28 @@ class ArticleCell : UITableViewCell {
 /// Cette vue met en forme une cellule avec une image et les informations de titre, prix et urgence d'un article
     
 // MARK: - Déclaration des variables
+    
+    var imageViewModel : ImageViewModel?
+    
+    var thumbUrl: String = ""
+    
     var article : Article? {
         didSet {
            guard let articleItem = article else {return}
+            
             if  articleImage.image != nil {
-                articleImage.load(urlString:(article?.imagesUrl.thumb)!)
-                articleTitleLabel.text = articleItem.title
-                articlePrix.text = "Prix: " + (article?.price.afficherUnFloat)! + " €"
-                
-                    if article!.isUrgent {
-                        articleisUrgent.text = "🔥"
-                    } else {
-                        articleisUrgent.text = ""
-                    }
+                self.thumbUrl = article?.imagesUrl.thumb ?? ""
+                //articleImage.load(urlString:thumbUrl)
+                articleImage.image = self.imageViewModel?.getImage(self.thumbUrl)
+            }
+            
+            articleTitleLabel.text = articleItem.title
+            articlePrix.text = "Prix: " + (article?.price.afficherUnFloat)! + " €"
+            
+            if article!.isUrgent {
+                articleisUrgent.text = "🔥"
+            } else {
+                articleisUrgent.text = ""
             }
             
         }
@@ -95,7 +104,19 @@ class ArticleCell : UITableViewCell {
         contentView.addSubview(articleisUrgent)
         cellUI()
     }
+    
+    func bindViewModels(imageServiceProtocol: ImageServiceProtocol) {
+        self.imageViewModel = ImageViewModel(imageServiceProtocol)
+        
+        self.imageViewModel?.bindImageViewModelToController = {
+            self.updateImageWithData(self.thumbUrl)
+        }
+    }
 
+    func updateImageWithData(_ imageUrl: String) {
+        /// Récupération de la liste des articles
+        articleImage.image = self.imageViewModel?.getImage(imageUrl)
+    }
     
 // MARK: - Définition des contraintes
     func cellUI() {

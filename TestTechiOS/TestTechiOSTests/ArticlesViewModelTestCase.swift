@@ -10,7 +10,7 @@ import XCTest
 
 class ArticlesViewModelTestCase: XCTestCase {
     
-    var articlesViewModel: ArticlesViewModel!
+    var articlesViewModel: ArticlesListViewModel!
     
     let firstArticle: Article = Article(
         id:1701863837,
@@ -70,8 +70,8 @@ class ArticlesViewModelTestCase: XCTestCase {
     
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
-        articlesViewModel = ArticlesViewModel()
-        articlesViewModel.isTesting = true
+        let articlesServiceMock = ArticlesServiceMock()
+        articlesViewModel = ArticlesListViewModel(articlesServiceMock)
     }
 
     override func tearDownWithError() throws {
@@ -82,17 +82,12 @@ class ArticlesViewModelTestCase: XCTestCase {
     func testCallGetArticlesAPI() throws {
         // This is an example of a functional test case.
         // Use XCTAssert and related functions to verify your tests produce the correct results.
-        XCTAssert(articlesViewModel.articlesData == [])
-        
-        articlesViewModel.callGetArticlesAPI()
-        
+
         XCTAssert(articlesViewModel.articlesData == [secondArticle, fourthArticle, thirdArticle, firstArticle])
     }
     
     func testUpdateWithFilter() throws {
         let categoryIdFilter: Int64 = 2
-        
-        articlesViewModel.callGetArticlesAPI()
         
         articlesViewModel.updateWithFilter(categoryIdFilter)
         

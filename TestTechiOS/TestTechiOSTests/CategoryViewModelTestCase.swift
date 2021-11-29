@@ -10,7 +10,7 @@ import XCTest
 
 class CategoryViewModelTestCase: XCTestCase {
     
-    var categoryViewModel: CategoryViewModel!
+    var categoriesViewModel: CategoriesListViewModel!
     
     let testCategories = [
         Category(id:1,name:"Véhicule"),
@@ -20,8 +20,8 @@ class CategoryViewModelTestCase: XCTestCase {
 
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
-        categoryViewModel = CategoryViewModel()
-        categoryViewModel.isTesting = true
+        let categoriesServiceMock = CategoriesServiceMock()
+        categoriesViewModel = CategoriesListViewModel(categoriesServiceMock)
     }
 
     override func tearDownWithError() throws {
@@ -29,26 +29,25 @@ class CategoryViewModelTestCase: XCTestCase {
     }
     
     func testCallGetCategories() throws {
-        XCTAssert(categoryViewModel.categoriesData == [])
         
-        categoryViewModel.callGetCategories()
-        
-        XCTAssert(categoryViewModel.categoriesData == testCategories)
+        XCTAssert(categoriesViewModel.categoriesData == testCategories)
     }
-    
+ 
     func testGetNameById() throws {
-        categoryViewModel.callGetCategories()
+        
         let categoryId: Int64 = 2
         
-        let resultName = categoryViewModel.getNameById(categoryId)
+        let resultName = categoriesViewModel.getNameById(categoryId)
         
         XCTAssert(resultName == "Mode")
     }
     
     func testGetNameList() throws {
-        categoryViewModel.callGetCategories()
+        let categoriesServiceMock = CategoriesServiceMock()
+        let categoriesViewModel = CategoriesListViewModel(categoriesServiceMock)
+        categoriesViewModel.callGetCategories()
         
-        let resultList: [String] = categoryViewModel.getNameList()
+        let resultList: [String] = categoriesViewModel.getNameList()
         
         XCTAssert(resultList == ["Véhicule", "Mode", "Bricolage"])
     }

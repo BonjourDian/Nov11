@@ -11,6 +11,11 @@ class DetailViewController: UIViewController {
 /// Cette vue affiche les détails d'un article
     
 // MARK: - Déclaration des variables
+    
+    var imageViewModel : ImageViewModel?
+    
+    var smallUrl: String = ""
+    
     var article : Article? {
         
         didSet {
@@ -126,6 +131,20 @@ class DetailViewController: UIViewController {
         view.backgroundColor = UIColor.rgb(red: 249, green: 255, blue: 247)
         setupScrollView()
         setupViews()
+    }
+    
+// MARK: - Fonction de liaison du viewmodel
+    func bindViewModels(imageServiceProtocol: ImageServiceProtocol) {
+        self.imageViewModel = ImageViewModel(imageServiceProtocol)
+        
+        self.imageViewModel?.bindImageViewModelToController = {
+            self.updateImageWithData(self.smallUrl)
+        }
+    }
+    
+    func updateImageWithData(_ imageUrl: String) {
+        /// Récupération de la liste des articles
+        articleImage.image = self.imageViewModel?.getImage(imageUrl)
     }
     
 // MARK: - Fonction de formattage des dates

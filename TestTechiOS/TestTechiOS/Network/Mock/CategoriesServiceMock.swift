@@ -1,12 +1,12 @@
 //
-//  CategoryMockService.swift
+//  CategoriesServiceMock.swift
 //  TestTechiOS
 //
 //  Created by DIAN on 12/11/2021.
 //
 
 
-class CategoryMockService: CategoryService {
+class CategoriesServiceMock: CategoriesServiceProtocol {
 /// Cette classe est utilisée pour les tests unitaires.
 /// Elle simule une API en envoyant une liste de catégories
     
@@ -25,4 +25,5 @@ class CategoryMockService: CategoryService {
     }
   
 }
+
 

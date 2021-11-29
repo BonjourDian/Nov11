@@ -1,12 +1,11 @@
 //
-//  ArticleMockService.swift
+//  ArticlesServiceMock.swift
 //  TestTechiOS
 //
 //  Created by DIAN on 11/11/2021.
 //
 
-
-class ArticleMockService: ArticleService {
+class ArticlesServiceMock: ArticlesServiceProtocol {
 /// Cette classe est utilisée pour les tests unitaires.
 /// Elle simule une API en envoyant une liste d'articles
     

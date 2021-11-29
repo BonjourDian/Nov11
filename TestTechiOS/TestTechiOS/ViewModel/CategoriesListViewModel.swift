@@ -1,5 +1,5 @@
 //
-//  CategoryViewModel.swift
+//  CategoriesListViewModel.swift
 //  TestTechiOS
 //
 //  Created by DIAN on 13/11/2021.
@@ -7,19 +7,12 @@
 
 import Foundation
 
-class CategoryViewModel: NSObject {
+class CategoriesListViewModel: NSObject {
 /// Ce viewmodel récupère la liste des catégories auprès du service API et les met à disposition des vues. Il comporte également des fonctions récupérer les noms de catégories ou une catégorie par son id
 
 // MARK: - Déclaration des variables
-    var isTesting: Bool = false
     
-    private var categoryService: CategoryService{
-        if isTesting {
-            return CategoryMockService()
-        } else {
-            return CategoryApiService()
-        }
-    }
+    private let categoriesServiceProtocol: CategoriesServiceProtocol
     
     private(set) var categoriesData : [Category] = [] {
         didSet {
@@ -30,14 +23,15 @@ class CategoryViewModel: NSObject {
     var bindCategoryViewModelToController : (() -> ()) = {}
 
 // MARK: - Initialisation du VueModel
-    override init() {
+    init(_ categoriesServiceProtocol: CategoriesServiceProtocol) {
+        self.categoriesServiceProtocol = categoriesServiceProtocol
         super.init()
         callGetCategories()
     }
     
     func callGetCategories() {
         /// Cette fonction récupère la liste des catégories
-        self.categoryService.getCategories{(categoriesData) in
+        self.categoriesServiceProtocol.getCategories{(categoriesData) in
             self.categoriesData = categoriesData
         }
     }

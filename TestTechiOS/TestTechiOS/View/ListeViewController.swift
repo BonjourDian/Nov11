@@ -37,45 +37,44 @@ class ListeViewController: UIViewController {
     
     var categoryNameList: [String] = []
     
-    private var articlesViewModel : ArticlesViewModel!
-    private var categoryViewModel : CategoryViewModel!
-
+    var articlesListViewModel : ArticlesListViewModel?
+    var categoriesListViewModel : CategoriesListViewModel?
+    
+    var imageServiceProtocol : ImageServiceProtocol?
+    
 // MARK: - Cycle de vie
     override func viewDidLoad() {
         super.viewDidLoad()
         articleTableView.dataSource = self
         articleTableView.delegate = self
         view.addSubview(articleTableView)
-        callViewModelForUIUpdate()
         TableViewUI()
         navigationUI()
     }
-
-
-    func callViewModelForUIUpdate(){
-        /// Initialisation des liens avec les viewmodel
-        self.articlesViewModel = ArticlesViewModel()
-        self.categoryViewModel = CategoryViewModel()
+    
+    func bindViewModels(articlesServiceProtocol: ArticlesServiceProtocol, categoriesServiceProtocol: CategoriesServiceProtocol) {
+        /// Lie les viewmodels et rafraichit le Tableview
+        self.articlesListViewModel = ArticlesListViewModel(articlesServiceProtocol)
+        self.categoriesListViewModel = CategoriesListViewModel(categoriesServiceProtocol)
         
-        self.articlesViewModel.bindArticleViewModelToController = {
+        self.articlesListViewModel?.bindArticleViewModelToController = {
             self.updateArticlesWithData()
         }
-        self.categoryViewModel.bindCategoryViewModelToController = {
+        self.categoriesListViewModel?.bindCategoryViewModelToController = {
             self.updateCategoriesWithData()
         }
-        
+
         self.articleTableView.reloadData()
-        
     }
     
     func updateArticlesWithData() {
         /// Récupération de la liste des articles
-        dataTriArticles = self.articlesViewModel.getArticles(filter: self.isFilterActive)
+        dataTriArticles = self.articlesListViewModel?.getArticles(filter: self.isFilterActive) ?? []
     }
     
     func updateCategoriesWithData() {
         /// Récupération de la liste des catégories
-        categoryNameList = self.categoryViewModel.getNameList()
+        categoryNameList = self.categoriesListViewModel?.getNameList() ?? []
     }
     
 // MARK: - Génération des vues
@@ -123,8 +122,8 @@ class ListeViewController: UIViewController {
     @objc func onClickedDoneButton() {
         /// Bouton pour valider la sélection d'un filtre par catégorie
         self.isFilterActive = true
-        self.articlesViewModel.updateWithFilter(self.pickerCategoryId)
-        self.dataTriArticles = self.articlesViewModel.getArticles(filter: self.isFilterActive)
+        self.articlesListViewModel?.updateWithFilter(self.pickerCategoryId)
+        self.dataTriArticles = self.articlesListViewModel?.getArticles(filter: self.isFilterActive) ?? []
         articleUIPicker.isHidden = true
         self.navigationController?.isToolbarHidden = true
     }
@@ -132,7 +131,7 @@ class ListeViewController: UIViewController {
     @objc func onClickedResetButton() {
         /// Bouton pour annuler le filtre
         self.isFilterActive = false
-        self.dataTriArticles = self.articlesViewModel.getArticles(filter: self.isFilterActive)
+        self.dataTriArticles = self.articlesListViewModel?.getArticles(filter: self.isFilterActive) ?? []
         articleUIPicker.isHidden = true
         self.navigationController?.isToolbarHidden = true
     }
@@ -154,11 +153,11 @@ extension ListeViewController: UIPickerViewDelegate, UIPickerViewDataSource {
        return 1
     }
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        self.categoryNameList = self.categoryViewModel.getNameList()
+        self.categoryNameList = self.categoriesListViewModel?.getNameList() ?? []
         return self.categoryNameList.count
     }
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        self.categoryNameList = self.categoryViewModel.getNameList()
+        self.categoryNameList = self.categoriesListViewModel?.getNameList() ?? []
         return self.categoryNameList[row]
     }
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
@@ -174,12 +173,15 @@ extension ListeViewController:  UITableViewDataSource, UITableViewDelegate {
         return dataTriArticles.count
     }
     
-
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: ArticleCell = (tableView.dequeueReusableCell(withIdentifier: "cell") as! ArticleCell)
         
+        if self.imageServiceProtocol != nil {
+            cell.bindViewModels(imageServiceProtocol: self.imageServiceProtocol!)
+        }
+        
         let article = dataTriArticles[indexPath.row]
-        let categoryName = self.categoryViewModel.getNameById(article.categoryId)
+        let categoryName = self.categoriesListViewModel?.getNameById(article.categoryId)
         cell.article = article
         cell.categoryName = categoryName
 
@@ -195,8 +197,13 @@ extension ListeViewController:  UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         /// Cette fonction permet de naviguer vers la vue détail d'un article
         let destination = DetailViewController()
+        
+        if self.imageServiceProtocol != nil {
+            destination.bindViewModels(imageServiceProtocol: self.imageServiceProtocol!)
+        }
+        
         let article = dataTriArticles[indexPath.row]
-        let categoryName = self.categoryViewModel.getNameById(article.categoryId)
+        let categoryName = self.categoriesListViewModel?.getNameById(article.categoryId)
         destination.article = article
         destination.categoryName = categoryName
         navigationController?.pushViewController(destination, animated: true)

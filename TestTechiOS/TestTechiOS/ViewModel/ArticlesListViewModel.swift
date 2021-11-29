@@ -1,5 +1,5 @@
 //
-//  ArticlesViewModel.swift
+//  ArticlesListViewModel.swift
 //  TestTechiOS
 //
 //  Created by DIAN on 12/11/2021.
@@ -7,19 +7,12 @@
 
 import Foundation
 
-class ArticlesViewModel : NSObject {
+class ArticlesListViewModel : NSObject {
 /// Ce viewmodel récupère la liste des articles auprès du service API et les met à disposition des vues. Il comporte également des fonctions pour trier et filtrer les données.
 
 // MARK: - Déclaration des variables
-    var isTesting: Bool = false
     
-    private var articleService : ArticleService{
-        if isTesting {
-            return ArticleMockService()
-        } else {
-            return ArticleApiService()
-        }
-    }
+    private let articlesServiceProtocol: ArticlesServiceProtocol
     
     private(set) var articlesData : [Article] = [] {
         didSet {
@@ -32,7 +25,8 @@ class ArticlesViewModel : NSObject {
     var articlesFilter: [Article] = []
 
 // MARK: - Initialisation du VueModel
-    override init() {
+    init(_ articlesServiceProtocol: ArticlesServiceProtocol) {
+        self.articlesServiceProtocol = articlesServiceProtocol
         super.init()
         callGetArticlesAPI()
     }
@@ -41,7 +35,7 @@ class ArticlesViewModel : NSObject {
     
     func callGetArticlesAPI() {
         /// Cette fonction récupère la liste des articles et les trie par date puis par urgence
-        self.articleService.getArticlesAPI{(articlesData) in
+        self.articlesServiceProtocol.getArticlesAPI{(articlesData) in
             self.articlesData = articlesData
             self.articlesData = self.orderByDate(self.articlesData)
             self.articlesData = self.orderByUrgency(self.articlesData)
